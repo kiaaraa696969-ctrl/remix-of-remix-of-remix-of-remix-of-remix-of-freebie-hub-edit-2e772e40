@@ -224,7 +224,7 @@ const AccountReveal = () => {
             </>
           )}
 
-          {account.notes && (
+          {account.notes && !isMultiAccount && (
             <div className="bg-muted rounded-xl px-5 py-4 mb-8">
               <p className="text-xs text-muted-foreground leading-relaxed">💡 {account.notes}</p>
             </div>
