@@ -180,3 +180,53 @@ export async function resetClaim(id: string): Promise<void> {
     .update({ is_claimed: false, claimed_at: null })
     .eq('id', id);
 }
+
+export interface SubAccount {
+  id: string;
+  accountId: string;
+  label: string;
+  email: string;
+  password: string;
+  games?: string;
+  cookieFile?: string;
+  cookieFileName?: string;
+  notes?: string;
+  sortOrder: number;
+}
+
+export async function fetchSubAccounts(accountId: string): Promise<SubAccount[]> {
+  const { data, error } = await supabase
+    .from('sub_accounts')
+    .select('*')
+    .eq('account_id', accountId)
+    .order('sort_order', { ascending: true });
+  if (error || !data) return [];
+  return data.map((row: any) => ({
+    id: row.id,
+    accountId: row.account_id,
+    label: row.label,
+    email: row.email,
+    password: row.password,
+    games: row.games || undefined,
+    cookieFile: row.cookie_file || undefined,
+    cookieFileName: row.cookie_file_name || undefined,
+    notes: row.notes || undefined,
+    sortOrder: row.sort_order,
+  }));
+}
+
+export async function addSubAccounts(accountId: string, subs: Omit<SubAccount, 'id' | 'accountId'>[]): Promise<void> {
+  if (subs.length === 0) return;
+  const rows = subs.map((s, i) => ({
+    account_id: accountId,
+    label: s.label,
+    email: s.email,
+    password: s.password,
+    games: s.games || null,
+    cookie_file: s.cookieFile || null,
+    cookie_file_name: s.cookieFileName || null,
+    notes: s.notes || null,
+    sort_order: i,
+  }));
+  await supabase.from('sub_accounts').insert(rows);
+}
