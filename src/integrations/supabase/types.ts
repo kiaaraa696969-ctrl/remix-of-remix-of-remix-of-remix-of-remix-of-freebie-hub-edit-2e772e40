@@ -310,6 +310,56 @@ export type Database = {
         }
         Relationships: []
       }
+      sub_accounts: {
+        Row: {
+          account_id: string
+          cookie_file: string | null
+          cookie_file_name: string | null
+          created_at: string
+          email: string
+          games: string | null
+          id: string
+          label: string
+          notes: string | null
+          password: string
+          sort_order: number
+        }
+        Insert: {
+          account_id: string
+          cookie_file?: string | null
+          cookie_file_name?: string | null
+          created_at?: string
+          email?: string
+          games?: string | null
+          id?: string
+          label?: string
+          notes?: string | null
+          password?: string
+          sort_order?: number
+        }
+        Update: {
+          account_id?: string
+          cookie_file?: string | null
+          cookie_file_name?: string | null
+          created_at?: string
+          email?: string
+          games?: string | null
+          id?: string
+          label?: string
+          notes?: string | null
+          password?: string
+          sort_order?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "sub_accounts_account_id_fkey"
+            columns: ["account_id"]
+            isOneToOne: false
+            referencedRelation: "accounts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       user_roles: {
         Row: {
           created_at: string
