@@ -113,7 +113,7 @@ const AccountReveal = () => {
 
           {isMultiAccount && (
             <div className="mb-2">
-              <p className="text-xs text-muted-foreground mb-1">📌 Check regularly, data sometimes changes</p>
+              <p className="text-xs text-muted-foreground mb-1">📌 Some accs may stop working but you can check regularly here as new drops</p>
             </div>
           )}
 
@@ -224,7 +224,7 @@ const AccountReveal = () => {
             </>
           )}
 
-          {account.notes && (
+          {account.notes && !isMultiAccount && (
             <div className="bg-muted rounded-xl px-5 py-4 mb-8">
               <p className="text-xs text-muted-foreground leading-relaxed">💡 {account.notes}</p>
             </div>
